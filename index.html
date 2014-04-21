@@ -1,0 +1,52 @@
+<script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<!--Esta es la por defecto -->
+<script>
+  var lat            = latitud_numero;
+  var lon            = longitud_numero;
+  var zoom           = 15; 
+  var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+  var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+  var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection); 
+  map = new OpenLayers.Map("id_div");
+  var mapnik         = new OpenLayers.Layer.OSM();
+  map.addLayer(mapnik); 
+  var markers = new OpenLayers.Layer.Markers("Markers");
+  map.addLayer(markers);
+  markers.addMarker(new OpenLayers.Marker(position)); 
+  map.setCenter(position, zoom);
+</script>
+
+<!-- Con controlers encendidos [EXTENDIDOS] -->
+
+<script>
+  var lat            = latitud_numero;
+  var lon            = longitud_numero;
+  var zoom           = 15; 
+  var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+  var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+  var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection); 
+                              
+  map = new OpenLayers.Map("id_div", {
+    controls:[
+    new OpenLayers.Control.Navigation(),
+    new OpenLayers.Control.PanZoomBar(),
+    new OpenLayers.Control.LayerSwitcher(),
+    new OpenLayers.Control.Attribution()],
+    maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+    maxResolution: 156543.0399,
+    numZoomLevels: 19,
+    units: "m",
+    projection: new OpenLayers.Projection("EPSG:900913"),
+    displayProjection: new OpenLayers.Projection("EPSG:4326")
+  });
+
+  var mapnik         = new OpenLayers.Layer.OSM();
+  map.addLayer(mapnik); 
+  var markers = new OpenLayers.Layer.Markers("Markers");
+  map.addLayer(markers);
+  markers.addMarker(new OpenLayers.Marker(position)); 
+  map.setCenter(position, zoom);
+</script>
+
+<div id="id_div" style="height:500px;width:500px;"></div>
+
